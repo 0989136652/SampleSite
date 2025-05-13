@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個人首頁</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    #search-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #search-bar select,
+    #search-bar input,
+    #search-bar button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    #tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      padding: 0.5rem 1rem;
+      background: #333;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: #007bff;
+    }
+
+    .tab:hover {
+      background: #0056b3;
+    }
+
+    #desktop {
+      display: none;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    #desktop.active {
+      display: flex;
+    }
+
+    .folder {
+      background: #2c2c2c;
+      padding: 1rem;
+      border-radius: 1rem;
+      width: 220px;
+    }
+
+    .folder-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .folder-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .icon {
+      text-align: center;
+      width: 60px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .icon img {
+      width: 32px;
+      height: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div id="search-bar">
+    <select id="engine">
+      <option value="https://www.google.com/search?q=">Google</option>
+      <option value="https://search.yahoo.com/search?p=">Yahoo</option>
+      <option value="https://www.bing.com/search?q=">Bing</option>
+      <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+    </select>
+    <input type="text" id="query" placeholder="搜尋...">
+    <button onclick="search()">搜尋</button>
+  </div>
+
+  <div id="tabs">
+    <div class="tab active" data-tab="google">Google</div>
+    <div class="tab" data-tab="microsoft">Microsoft</div>
+    <div class="tab" data-tab="general">常用網站</div>
+  </div>
+
+  <div id="google" class="desktop active">
+    <div class="folder">
+      <div class="folder-title">Google</div>
+      <div class="folder-content">
+        <a href="https://www.google.com" class="icon" title="Google"><img src="https://www.google.com/favicon.ico"><span>Google</span></a>
+        <a href="https://mail.google.com" class="icon" title="Gmail"><img src="https://mail.google.com/favicon.ico"><span>Gmail</span></a>
+        <a href="https://drive.google.com" class="icon" title="Drive"><img src="https://drive.google.com/favicon.ico"><span>Drive</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="microsoft" class="desktop">
+    <div class="folder">
+      <div class="folder-title">Microsoft</div>
+      <div class="folder-content">
+        <a href="https://www.microsoft.com" class="icon" title="Microsoft"><img src="https://www.microsoft.com/favicon.ico"><span>Microsoft</span></a>
+        <a href="https://outlook.live.com" class="icon" title="Outlook"><img src="https://outlook.live.com/favicon.ico"><span>Outlook</span></a>
+        <a href="https://onedrive.live.com" class="icon" title="OneDrive"><img src="https://onedrive.live.com/favicon.ico"><span>OneDrive</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="general" class="desktop">
+    <div class="folder">
+      <div class="folder-title">常用網站</div>
+      <div class="folder-content">
+        <a href="https://www.youtube.com" class="icon" title="YouTube"><img src="https://www.youtube.com/favicon.ico"><span>YouTube</span></a>
+        <a href="https://www.reddit.com" class="icon" title="Reddit"><img src="https://www.reddit.com/favicon.ico"><span>Reddit</span></a>
+        <a href="https://www.wikipedia.org" class="icon" title="Wikipedia"><img src="https://www.wikipedia.org/static/favicon/wikipedia.ico"><span>Wiki</span></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function search() {
+      const engine = document.getElementById('engine').value;
+      const query = document.getElementById('query').value;
+      if (query.trim()) {
+        window.open(engine + encodeURIComponent(query), '_blank');
+      }
+    }
+
+    const tabs = document.querySelectorAll('.tab');
+    const desktops = document.querySelectorAll('.desktop');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        desktops.forEach(d => d.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
